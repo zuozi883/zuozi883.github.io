@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pi Network API 代理服务</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }
+        h1 { color: #333; }
+        .endpoint { background: #f5f5f5; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        code { background: #eee; padding: 2px 5px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <h1>Pi Network API 代理服务</h1>
+    <p>这是一个 Pi Network API 的代理服务，用于绕过 CORS 限制。</p>
+    
+    <div class="endpoint">
+        <h3>📊 网络统计</h3>
+        <p><code>GET /network/stats</code></p>
+        <a href="/proxy.html?endpoint=/network/stats" target="_blank">测试此端点</a>
+    </div>
+    
+    <div class="endpoint">
+        <h3>📦 区块数据</h3>
+        <p><code>GET /blocks</code></p>
+        <a href="/proxy.html?endpoint=/blocks" target="_blank">测试此端点</a>
+    </div>
+    
+    <h3>使用方式</h3>
+    <p>在你的 JavaScript 代码中，可以这样调用：</p>
+    <pre><code>const response = await fetch('https://zuozi883.github.io/proxy.html?endpoint=/network/stats');
+const data = await response.json();</code></pre>
+</body>
+</html>
