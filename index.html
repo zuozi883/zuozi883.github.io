@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pi Network 数据工具</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .upload-area {
+            background: #f8f9fa;
+            border: 3px dashed #4facfe;
+            border-radius: 15px;
+            padding: 60px 20px;
+            margin: 30px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .upload-area:hover {
+            background: #edf7ff;
+            border-color: #667eea;
+        }
+        .upload-icon {
+            font-size: 60px;
+            color: #4facfe;
+            margin-bottom: 20px;
+        }
+        button {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .data-display {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            display: none;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Pi Network 数据工具</h1>
+        <p>上传JSON文件或获取实时网络数据</p>
+        
+        <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+            <div class="upload-icon">📁</div>
+            <h3>点击上传JSON文件</h3>
+            <p>支持Pi Network数据文件</p>
+            <input type="file" id="fileInput" accept=".json" style="display:none;">
+        </div>
+        
+        <button onclick="fetchData()">🌐 获取实时数据</button>
+        
+        <div class="data-display" id="dataDisplay">
+            <h3>📈 数据展示</h3>
+            <div id="dataContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // 文件上传处理
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    try {
+                        const data = JSON.parse(event.target.result);
+                        showData(data);
+                    } catch (error) {
+                        alert('JSON文件格式错误！');
+                    }
+                };
+                reader.readAsText(file);
+            }
+        });
+        
+        // 获取实时数据
+        async function fetchData() {
+            document.getElementById('dataDisplay').style.display = 'block';
+            document.getElementById('dataContent').innerHTML = `
+                <p>正在从Pi Network API获取数据...</p>
+                <p>如果此处没有显示数据，请访问代理页面：</p>
+                <a href="proxy.html?endpoint=/network/stats" target="_blank">proxy.html?endpoint=/network/stats</a>
+            `;
+        }
+        
+        // 显示数据
+        function showData(data) {
+            document.getElementById('dataDisplay').style.display = 'block';
+            let html = '<ul>';
+            for (const [key, value] of Object.entries(data)) {
+                html += `<li><strong>${key}:</strong> ${value}</li>`;
+            }
+            html += '</ul>';
+            document.getElementById('dataContent').innerHTML = html;
+        }
+    </script>
+</body>
+</html>
